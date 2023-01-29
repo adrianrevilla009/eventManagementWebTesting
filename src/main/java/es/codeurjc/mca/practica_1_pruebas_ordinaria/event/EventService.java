@@ -27,6 +27,10 @@ public class EventService {
     @Autowired
     private ModelMapper modelMapper;
 
+    public EventService(EventRepository eventRepository) {
+        this.eventRepository = eventRepository;
+    }
+
     public Collection<Event> findAll() {
         return eventRepository.findAll();
     }

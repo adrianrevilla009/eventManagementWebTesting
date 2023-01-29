@@ -16,6 +16,7 @@
 
 	<properties>
 		<java.version>17</java.version>
+		<org.testcontainer.version>1.15.1</org.testcontainer.version>
 	</properties>
 
 	<dependencies>
@@ -63,6 +64,25 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<!-- TEST CONTAINER DEPENDENCIES -->
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>testcontainers</artifactId>
+			<version>${org.testcontainer.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>${org.testcontainer.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>mysql</artifactId>
+			<version>${org.testcontainer.version}</version>
 		</dependency>
 	</dependencies>
 

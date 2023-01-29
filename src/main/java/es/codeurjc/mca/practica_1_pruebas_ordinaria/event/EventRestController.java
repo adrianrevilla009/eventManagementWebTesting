@@ -40,7 +40,7 @@ public class EventRestController{
 
 	@PostMapping("/")
 	@JsonView(Event.BasicAtt.class)
-	public ResponseEntity<Event> createEvent(EventDto eventDto) throws Exception{	
+	public ResponseEntity<Event> createEvent(@RequestBody EventDto eventDto) throws Exception{
 		Event createdEvent = eventService.createEvent(eventDto);
 		return new ResponseEntity<>(createdEvent, HttpStatus.CREATED);
 	}
