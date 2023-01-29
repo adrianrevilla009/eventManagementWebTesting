@@ -4,6 +4,8 @@ import java.util.Calendar;
 
 import javax.annotation.PostConstruct;
 
+import es.codeurjc.mca.practica_1_pruebas_ordinaria.ticket.Ticket;
+import es.codeurjc.mca.practica_1_pruebas_ordinaria.ticket.TicketRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class DatabaseInitializer {
 
     @Autowired
     private EventRepository eventRepository;
+
+    @Autowired
+    private TicketRepository ticketRepository;
 
     // TODO esto hay que evitarlo, hacerlo de otra forma
     @PostConstruct
@@ -48,8 +53,12 @@ public class DatabaseInitializer {
             Calendar c1 = Calendar.getInstance(); 
             c1.set(2021, Calendar.MAY, 2, 18, 30);
             Event e1 = new Event("Concierto municipal de Móstoles", "Concierto ofrecido por ...", c1.getTime(), 19.99, 50);
-            e1.setCreator(u2);
+            e1.setCreator(u3); // changed from u3 to u2
+            e1.setCurrent_capacity(20);
             eventRepository.save(e1);
+
+            Ticket t1 = new Ticket(u3, e1);
+            ticketRepository.save(t1);
 
             // ONLY FOR TESTING PURPOSES
             // IntStream.range(0,100).forEach(i -> {

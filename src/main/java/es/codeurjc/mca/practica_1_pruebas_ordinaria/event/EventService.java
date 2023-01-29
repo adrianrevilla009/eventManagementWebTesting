@@ -1,6 +1,7 @@
 package es.codeurjc.mca.practica_1_pruebas_ordinaria.event;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
@@ -106,6 +107,7 @@ public class EventService {
     }
 
     private Event checkEventExistAndGet(long eventId){
+        List<Event> eventList = eventRepository.findAll();
         Optional<Event> opEvent = eventRepository.findById(eventId);
         if (!opEvent.isPresent()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Event not longer exist");

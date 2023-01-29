@@ -1,5 +1,6 @@
 package es.codeurjc.mca.practica_1_pruebas_ordinaria.ticket;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ public class TicketService {
 	}
 
 	public Optional<Ticket> getTicket(long id) {
+        List<Ticket> a = ticketRepository.findAll();
 		return ticketRepository.findById(id);
     }
     

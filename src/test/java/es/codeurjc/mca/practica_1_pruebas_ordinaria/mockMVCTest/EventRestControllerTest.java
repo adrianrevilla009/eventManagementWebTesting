@@ -118,7 +118,7 @@ public class EventRestControllerTest {
         // given
         Event event = this.event;
         User user = this.user;
-        
+
         // when
         when(this.eventRepository.findById(1L)).thenReturn(Optional.of(event));
         when(this.userComponent.getLoggedUser()).thenReturn(user);
