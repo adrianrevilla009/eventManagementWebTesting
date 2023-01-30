@@ -56,37 +56,29 @@ public class TicketRestControllerTest {
     }
 
     @Test
-    public void createTicketAsCustomerAndCheckIncreasedCapacity() throws JSONException {
-        JSONObject body = new JSONObject();
-
-        body.put("eventId", 1L);
+    public void createTicketAsCustomerAndCheckIncreasedCapacity() {
 
         Response response = given().
-                contentType("application/json").
-                queryParam("id", 4L).
                 when().
-                get(this.apiEventsPrefix + "/4").
-                then().
-                extract().response();
+                get("/api/events/4").
+                thenReturn();
 
-        int capacity = from(response.getBody().asString()).get("current_capacity");
+        int current_capacity = from(response.getBody().asString()).get("current_capacity");
 
         given().
-                contentType("application/json").
-                body(body.toString()).
                 auth().basic("Michel", "pass").
+                queryParam("eventId", 4).
                 when().
-                post(this.apiPrefix + "/").
+                post("/api/tickets/").
                 then().
-                statusCode(200);
+                statusCode(201);
 
         given().
-                contentType("application/json").
-                queryParam("id", 4L).
                 when().
-                get(this.apiEventsPrefix + "/4").
+                get("/api/events/4").
                 then().
-                body("current_capacity", equalTo(capacity + 1));
+                statusCode(200).
+                body("current_capacity", equalTo(current_capacity + 1));
     }
 
     @Test

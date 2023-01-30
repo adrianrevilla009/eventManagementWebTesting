@@ -6,14 +6,19 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import es.codeurjc.mca.practica_1_pruebas_ordinaria.event.Event;
 import es.codeurjc.mca.practica_1_pruebas_ordinaria.ticket.Ticket;
 import es.codeurjc.mca.practica_1_pruebas_ordinaria.user.User;
+import es.codeurjc.mca.practica_1_pruebas_ordinaria.user.UserRepository;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.test.context.event.annotation.BeforeTestExecution;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.Calendar;
@@ -28,38 +33,81 @@ public class UserRestControllerTest {
     private int port;
 
     private String apiPrefix = "/api/users";
-    private String user;
+    private User userOrganizer;
+    private User userCustomer;
+
+    /*@Autowired
+    private UserRepository userRepository;*/
 
     @BeforeEach
-    public void init() throws JSONException, JsonProcessingException {
+    public void init() {
         RestAssured.port = this.port;
         RestAssured.useRelaxedHTTPSValidation();
         RestAssured.baseURI = "https://localhost:" + this.port;
 
-        User user = new User("Michel", "michel.maes@urjc.es", "pass", User.ROLE_CUSTOMER);
-        user.setId(1L);
+        /*User userAdmin = new User("admin", "admin@urjc.es", "pass", User.ROLE_ADMIN);
+        userAdmin.setId(1L);*/
+        User userOrganizer = new User("Pepe", "pepe@urjc.es", "pass", User.ROLE_ORGANIZER);
+        userOrganizer.setId(2L);
+        User userCustomer = new User("Juan", "juan@urjc.es", "pass", User.ROLE_CUSTOMER);
+        userCustomer.setId(3L);
 
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        String userString = ow.writeValueAsString(user);
+        /*this.userRepository.deleteAll();
+        this.userRepository.save(userAdmin);
+        this.userRepository.save(userOrganizer);
+        this.userRepository.save(userCustomer);*/
 
-        this.user = userString;
+        this.userOrganizer = userOrganizer;
+        this.userCustomer = userCustomer;
     }
 
     @Test
-    public void createUserAsCustomerAndCheckCreateAvailability() throws JSONException {
-        JSONObject body = new JSONObject();
+    public void createUserAsCustomerAndCheckCreateAvailability() throws JSONException{
 
-        body.put("eventId", 1L);
+        JSONObject bodyOrganizerUser = new JSONObject();
+        bodyOrganizerUser.put("name", "2" + this.userOrganizer.getName());
+        bodyOrganizerUser.put("email", "2" + this.userOrganizer.getEmail());
+        bodyOrganizerUser.put("password", this.userOrganizer.getPassword());
 
-        Response response = given().
+        given().
                 contentType("application/json").
-                auth().basic("Michel", "pass").
-                body(this.user).
+                body(bodyOrganizerUser.toString()).
+                queryParam("type", "Organizer").
                 when().
-                post(this.apiPrefix).
+                post(this.apiPrefix + "/").
                 then().
-                extract().response();
+                statusCode(201);
 
-        int id = from(response.getBody().asString()).get("id");
+        JSONObject bodyCustomer = new JSONObject();
+        bodyCustomer.put("name", "2" + this.userCustomer.getName());
+        bodyCustomer.put("email", "2" + this.userCustomer.getEmail());
+        bodyCustomer.put("password", this.userCustomer.getPassword());
+
+        given().
+                contentType("application/json").
+                body(bodyCustomer.toString()).
+                queryParam("type", "Customer").
+                when().
+                post(this.apiPrefix + "/").
+                then().
+                statusCode(201);
+    }
+
+    @Test
+    public void deleteUserAsAdminAndCheckDeleteAvailability() {
+
+        given().
+                auth().basic("admin", "pass").
+                when().
+                delete( this.apiPrefix + "/2").
+                then().
+                statusCode(204);
+
+        given().
+                auth().basic("admin", "pass").
+                when().
+                delete(this.apiPrefix + "/3").
+                then().
+                statusCode(204);
     }
 }

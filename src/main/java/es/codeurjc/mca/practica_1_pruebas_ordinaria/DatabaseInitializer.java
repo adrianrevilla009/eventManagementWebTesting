@@ -30,7 +30,6 @@ public class DatabaseInitializer {
     @Autowired
     private TicketRepository ticketRepository;
 
-    // TODO esto hay que evitarlo, hacerlo de otra forma
     @PostConstruct
 	public void init() {
 

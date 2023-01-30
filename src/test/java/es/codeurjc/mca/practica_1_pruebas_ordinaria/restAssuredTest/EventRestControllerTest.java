@@ -1,10 +1,7 @@
 package es.codeurjc.mca.practica_1_pruebas_ordinaria.restAssuredTest;
 
-/*import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
-import static io.restassured.path.json.JsonPath.from;
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItems;
 
 import es.codeurjc.mca.practica_1_pruebas_ordinaria.user.User;
 import io.restassured.RestAssured;
@@ -12,41 +9,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.MySQLContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.Calendar;
-
-import static io.restassured.RestAssured.given;*/
-import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
-import static io.restassured.path.json.JsonPath.from;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItems;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import es.codeurjc.mca.practica_1_pruebas_ordinaria.event.Event;
-import es.codeurjc.mca.practica_1_pruebas_ordinaria.user.User;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
-
-import io.restassured.RestAssured;
-import io.restassured.response.Response;
-import org.testcontainers.junit.jupiter.Testcontainers;
-
-import java.util.Calendar;
 
 @Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -75,16 +45,6 @@ public class EventRestControllerTest {
 
         this.event = eventString;
     }
-    /*@Container
-    public static MySQLContainer mySQLContainer = new MySQLContainer<>("mysql:8.0.22")
-            .withDatabaseName("events")
-            .withUsername("adrian")
-            .withPassword("adrian");
-
-    @DynamicPropertySource
-    public static void overrideProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", mySQLContainer::getJdbcUrl);
-    }*/
 
     @Test
     public void createEventTestAsOrganizer() {
