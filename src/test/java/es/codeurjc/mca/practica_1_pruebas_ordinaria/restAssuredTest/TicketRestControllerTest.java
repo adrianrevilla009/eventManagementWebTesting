@@ -9,14 +9,12 @@ import es.codeurjc.mca.practica_1_pruebas_ordinaria.user.User;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import java.time.LocalDateTime;
 import java.util.Calendar;
 
 import static io.restassured.RestAssured.given;
@@ -81,8 +79,9 @@ public class TicketRestControllerTest {
                 body("current_capacity", equalTo(current_capacity + 1));
     }
 
+    // TODO uncomment line 59 and 60 of DatabaseInitializer.java file to pass this test correctly
     @Test
-    public void deleteTicketAsCustomerAndCheckDecreasedCapacity() throws JSONException {
+    public void deleteTicketAsCustomerAndCheckDecreasedCapacity() {
 
         Response response = given().
                 contentType("application/json").
@@ -94,7 +93,6 @@ public class TicketRestControllerTest {
 
         int capacity = from(response.getBody().asString()).get("current_capacity");
 
-        // TODO why this request is not being detected
         given().
                 contentType("application/json").
                 queryParam("id", 5L).

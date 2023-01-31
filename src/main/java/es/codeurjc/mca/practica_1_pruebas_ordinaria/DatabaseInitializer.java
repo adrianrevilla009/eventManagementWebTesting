@@ -56,14 +56,8 @@ public class DatabaseInitializer {
             e1.setCurrent_capacity(20);
             eventRepository.save(e1);
 
-            Ticket t1 = new Ticket(u3, e1);
-            ticketRepository.save(t1);
-
-            // ONLY FOR TESTING PURPOSES
-            // IntStream.range(0,100).forEach(i -> {
-            //     User u = new User("user_"+i, "user_"+i+"@urjc.es", "pass", User.ROLE_CUSTOMER);
-            //     userRepository.save(u);
-            // });
+            // Ticket t1 = new Ticket(u3, e1);
+            // ticketRepository.save(t1);
 
         } else {
             log.info("--> DATABASE WITH DATA");

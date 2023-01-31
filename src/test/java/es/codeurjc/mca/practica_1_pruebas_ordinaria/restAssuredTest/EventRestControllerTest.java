@@ -58,7 +58,7 @@ public class EventRestControllerTest {
                 post(this.apiPrefix + "/").
         then().
                 statusCode(201).
-                body("id", equalTo(1L));
+                body("id", equalTo(5));
     }
 
 }
